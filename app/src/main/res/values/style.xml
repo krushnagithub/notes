@@ -1,0 +1,10 @@
+<resources>
+
+    <style name="Theme.Notes" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/black</item>
+    </style>
+
+
+</resources>

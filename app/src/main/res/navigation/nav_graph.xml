@@ -1,0 +1,41 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/notesFragment">
+
+    <fragment
+        android:id="@+id/notesFragment"
+        android:name="com.example.notes.Fragment.notesFragment"
+        android:label="Notes Fragment">
+
+        <action
+            android:id="@+id/action_notesFragment_to_addFragment"
+            app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_detailFragment"
+            app:destination="@+id/detailFragment"/>
+        <action
+            android:id="@+id/action_notesFragment_to_editFragment"
+            app:destination="@id/editFragment"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.example.notes.Fragment.EditFragment"
+        android:label="Edit Fragment"/>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.notes.Fragment.DetailFragment"
+        android:label="Detail Fragment"/>
+
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.example.notes.Fragment.addFragment"
+        android:label="Add Fragment">
+
+        <action
+            android:id="@+id/action_addFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
+    </fragment>
+</navigation>
