@@ -296,6 +296,7 @@ public class notesFragment extends Fragment {
         });
     }
 
+
     private List<NoteModel> convertNoteEntitiesToNoteModels(List<NoteEntity> noteEntities) {
         List<NoteModel> noteModels = new ArrayList<>();
         for (NoteEntity noteEntity : noteEntities) {

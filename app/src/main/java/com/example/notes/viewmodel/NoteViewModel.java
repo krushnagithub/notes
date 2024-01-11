@@ -26,7 +26,6 @@ public class NoteViewModel extends AndroidViewModel {
     }
 
     public void insert(NoteEntity note) {
-        // Run the insert operation in a background thread
         AppDatabase.databaseWriteExecutor.execute(() -> {
             noteDao.insert(note);
         });
@@ -37,21 +36,18 @@ public class NoteViewModel extends AndroidViewModel {
     }
 
     public void deleteNote(NoteEntity clickedNote) {
-        // Run the delete operation in a background thread
         AppDatabase.databaseWriteExecutor.execute(() -> {
             noteDao.delete(clickedNote);
         });
     }
 
     public void update(NoteEntity note) {
-        // Run the update operation in a background thread
         AppDatabase.databaseWriteExecutor.execute(() -> {
             noteDao.update(note);
         });
     }
 
     public LiveData<NoteEntity> getNoteById(long noteId) {
-        // Use the noteDao to retrieve the note by ID
         return noteDao.getNoteById(noteId);
     }
 

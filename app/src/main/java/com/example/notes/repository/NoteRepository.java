@@ -59,5 +59,21 @@ public class NoteRepository {
             noteDao.delete(notes[0]);
             return null;
         }
+         public void update(NoteEntity noteEntity) {
+             new UpdateAsyncTask(noteDao).execute(noteEntity);
+         }
 
-}
+         private static class UpdateAsyncTask extends AsyncTask<NoteEntity, Void, Void> {
+             private NoteDao noteDao;
+
+             private UpdateAsyncTask(NoteDao noteDao) {
+                 this.noteDao = noteDao;
+             }
+
+             @Override
+             protected Void doInBackground(NoteEntity... noteEntities) {
+                 noteDao.update(noteEntities[0]);
+                 return null;
+             }
+         }
+     }

@@ -26,7 +26,7 @@ public interface NoteDao {
     @Delete
     void delete(NoteEntity note);
     @Update
-    void update(NoteEntity note);
+    void update(NoteEntity noteEntity);
 
 
 
