@@ -99,7 +99,7 @@ public class notesFragment extends Fragment {
                 String query = input.getText().toString().trim();
                 List<NoteModel> filteredList = noteAdapter.filter(query);
 
-                 noteAdapter.updateData(filteredList); // Update the adapter's data with the filtered list
+                noteAdapter.updateData(filteredList); // Update the adapter's data with the filtered list
 
                 if (filteredList.isEmpty()) {
                     // Show a toast message indicating no results were found
@@ -175,41 +175,41 @@ public class notesFragment extends Fragment {
         }
     }
 
-      private List<NoteModel> filterNotes(boolean[] checkedOptions, List<NoteModel> originalList) {
-          List<NoteModel> filteredList = new ArrayList<>();
+    private List<NoteModel> filterNotes(boolean[] checkedOptions, List<NoteModel> originalList) {
+        List<NoteModel> filteredList = new ArrayList<>();
 
-          if (originalList != null) {
-              filteredList.addAll(originalList);
+        if (originalList != null) {
+            filteredList.addAll(originalList);
 
-              // Example: Filtering by Date
-              if (checkedOptions[0]) {
-                  // Sort by date
-                  Collections.sort(filteredList, new Comparator<NoteModel>() {
-                      @Override
-                      public int compare(NoteModel note1, NoteModel note2) {
-                          // Compare notes based on date
-                          return note1.getDate().compareTo(note2.getDate());
-                      }
-                  });
-              }
+            // Example: Filtering by Date
+            if (checkedOptions[0]) {
+                // Sort by date
+                Collections.sort(filteredList, new Comparator<NoteModel>() {
+                    @Override
+                    public int compare(NoteModel note1, NoteModel note2) {
+                        // Compare notes based on date
+                        return note1.getDate().compareTo(note2.getDate());
+                    }
+                });
+            }
 
-              // Example: Filtering by Content
-              if (checkedOptions[1]) {
-                  // Sort by content
-                  Collections.sort(filteredList, new Comparator<NoteModel>() {
-                      @Override
-                      public int compare(NoteModel note1, NoteModel note2) {
-                          // Compare notes based on content
-                          return note1.getContent().compareToIgnoreCase(note2.getContent());
-                      }
-                  });
-              }
+            // Example: Filtering by Content
+            if (checkedOptions[1]) {
+                // Sort by content
+                Collections.sort(filteredList, new Comparator<NoteModel>() {
+                    @Override
+                    public int compare(NoteModel note1, NoteModel note2) {
+                        // Compare notes based on content
+                        return note1.getContent().compareToIgnoreCase(note2.getContent());
+                    }
+                });
+            }
 
-              // Add more conditions for additional sorting options
-          }
+            // Add more conditions for additional sorting options
+        }
 
-          return filteredList;
-      }
+        return filteredList;
+    }
 
     private void initView() {
         noteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
@@ -265,16 +265,16 @@ public class notesFragment extends Fragment {
                 NoteEntity clickedNote = noteAdapter.getNotes().get(position);
                 long clickedNoteId = clickedNote.getId(); // Assuming your NoteEntity has a method getId()
 
-                // Navigate to the EditFragment and pass the noteId
                 Bundle bundle = new Bundle();
                 bundle.putLong("noteId", clickedNoteId);
 
                 bundle.putString("title", clickedNote.getTitle());
                 bundle.putString("date", clickedNote.getDate());
                 bundle.putString("content", clickedNote.getContent());
-                byte[] imageByteArray = clickedNote.getImage();
+                bundle.putString("imageBitmap", clickedNote.getContent());
+               /* byte[] imageByteArray = clickedNote.getImage();
                 bundle.putByteArray("imageBitmap", imageByteArray);
-
+                */
                 NavController navController = NavHostFragment.findNavController(notesFragment.this);
                 navController.navigate(R.id.action_notesFragment_to_editFragment, bundle);
             }
@@ -288,10 +288,13 @@ public class notesFragment extends Fragment {
             @Override
             public void onChanged(List<NoteEntity> noteEntities) {
                 Log.d("NotesFragment", "onChanged: Data changed. Size: " + noteEntities.size());
+                List<NoteModel> noteModels = convertNoteEntitiesToNoteModels(noteEntities);
 
-                noteAdapter.updateData(convertNoteEntitiesToNoteModels(noteEntities));
+                noteAdapter.updateData(noteModels);
+
                 noteAdapter.setNotes(noteEntities);
                 noteAdapter.notifyDataSetChanged();
+
             }
         });
     }
@@ -318,17 +321,5 @@ public class notesFragment extends Fragment {
         return noteModels;
     }
 
-
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        noteViewModel.getAllNotes().observe(getViewLifecycleOwner(), new Observer<List<NoteEntity>>() {
-            @Override
-            public void onChanged(List<NoteEntity> noteEntities) {
-                noteAdapter.updateData(convertNoteEntitiesToNoteModels(noteEntities));
-            }
-        });
-    }
 
 }

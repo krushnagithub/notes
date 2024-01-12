@@ -48,17 +48,18 @@ public class NoteRepository {
     }
 }
      class DeleteNoteAsyncTask extends AsyncTask<NoteEntity, Void, Void> {
-        private NoteDao noteDao;
+         private NoteDao noteDao;
 
-        DeleteNoteAsyncTask(NoteDao noteDao) {
-            this.noteDao = noteDao;
-        }
+         DeleteNoteAsyncTask(NoteDao noteDao) {
+             this.noteDao = noteDao;
+         }
 
-        @Override
-        protected Void doInBackground(NoteEntity... notes) {
-            noteDao.delete(notes[0]);
-            return null;
-        }
+         @Override
+         protected Void doInBackground(NoteEntity... notes) {
+             noteDao.delete(notes[0]);
+             return null;
+         }
+
          public void update(NoteEntity noteEntity) {
              new UpdateAsyncTask(noteDao).execute(noteEntity);
          }
@@ -74,6 +75,14 @@ public class NoteRepository {
              protected Void doInBackground(NoteEntity... noteEntities) {
                  noteDao.update(noteEntities[0]);
                  return null;
+             }
+
+             @Override
+             protected void onPostExecute(Void aVoid) {
+                 // After updating the note, notify the LiveData about the change
+                 // This ensures that the LiveData triggers an update for the observers
+                 // on the main (UI) thread.
+                 super.onPostExecute(aVoid);
              }
          }
      }

@@ -42,6 +42,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     }
 
+    public void updateItem(NoteModel updatedNoteModel) {
+
+    }
+
     public interface OnNoteClickListener {
         void onNoteClick(int position);
 
@@ -173,6 +177,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         if (position != RecyclerView.NO_POSITION && onNoteClickListener != null) {
             onNoteClickListener.onDeleteClick(position);
         }
+
     }
     public void updateData(List<NoteModel> newData) {
         noteList.clear();

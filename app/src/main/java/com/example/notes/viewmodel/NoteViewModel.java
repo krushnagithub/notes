@@ -16,6 +16,7 @@ import java.util.List;
 
 public class NoteViewModel extends AndroidViewModel {
     private NoteDao noteDao;
+    private String selectedImagePath;
     private LiveData<List<NoteEntity>> allNotes;
 
     public NoteViewModel(@NonNull Application application) {
@@ -24,6 +25,14 @@ public class NoteViewModel extends AndroidViewModel {
         noteDao = database.noteDao();
         allNotes = noteDao.getAllNotes();
     }
+    public String getSelectedImagePath() {
+        return selectedImagePath;
+    }
+
+    public void setSelectedImagePath(String selectedImagePath) {
+        this.selectedImagePath = selectedImagePath;
+    }
+
 
     public void insert(NoteEntity note) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
@@ -55,3 +64,4 @@ public class NoteViewModel extends AndroidViewModel {
         return null;
     }
 }
+
